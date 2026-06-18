@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>木嘉AI · Global — 不露脸 也能在海外赚美金</title>
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #000000; color: #ffffff; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ===== Layout Container ===== */
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* ===== Top Navigation ===== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
+  border-bottom: 1px solid #222222;
+}
+.navbar .container {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.nav-logo {
+  font-size: 20px; font-weight: 800; letter-spacing: -0.5px;
+}
+.nav-logo span { color: #FF0050; }
+.nav-menu { display: flex; gap: 32px; list-style: none; }
+.nav-menu a {
+  font-size: 14px; font-weight: 500; color: #aaaaaa;
+  transition: color 0.2s;
+}
+.nav-menu a:hover { color: #ffffff; }
+.nav-lang {
+  display: flex; gap: 8px; align-items: center;
+}
+.nav-lang button {
+  background: none; border: 1px solid #333333; color: #888888;
+  font-size: 12px; padding: 4px 10px; border-radius: 4px; cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-lang button:hover { border-color: #FF0050; color: #FF0050; }
+.nav-lang button.active { border-color: #FF0050; color: #FF0050; background: rgba(255,0,80,0.1); }
+.nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
+.nav-mobile-toggle div { width: 24px; height: 2px; background: #ffffff; margin: 5px 0; }
+
+/* ===== Hero Section ===== */
+.hero {
+  padding: 140px 0 80px; text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,0,80,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(0,242,234,0.06) 0%, transparent 50%),
+              #000000;
+}
+.hero-badge {
+  display: inline-block; padding: 6px 16px; border-radius: 20px;
+  background: rgba(255,0,80,0.1); border: 1px solid rgba(255,0,80,0.3);
+  font-size: 13px; color: #FF0050; margin-bottom: 24px;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.hero h1 {
+  font-size: 48px; font-weight: 900; line-height: 1.15;
+  margin-bottom: 20px; letter-spacing: -1px;
+}
+.hero h1 .highlight { color: #FF0050; }
+.hero h1 .highlight-cyan { color: #00F2EA; }
+.hero-sub {
+  font-size: 18px; color: #888888; max-width: 600px; margin: 0 auto 40px;
+  line-height: 1.7;
+}
+.hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #FF0050; color: #ffffff; font-weight: 700;
+  padding: 14px 32px; border-radius: 8px; font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+  border: none;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,0,80,0.35); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: #ffffff; font-weight: 600;
+  padding: 14px 32px; border-radius: 8px; font-size: 16px;
+  border: 1px solid #333333; transition: border-color 0.2s, background 0.2s; cursor: pointer;
+}
+.btn-secondary:hover { border-color: #00F2EA; background: rgba(0,242,234,0.05); }
+
+/* ===== Section Common ===== */
+.section { padding: 80px 0; }
+.section-dark { background: #000000; }
+.section-darker { background: #0a0a0a; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-tag {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+}
+.section-tag.pink { color: #FF0050; }
+.section-tag.cyan { color: #00F2EA; }
+.section-title {
+  font-size: 36px; font-weight: 800; line-height: 1.25;
+  letter-spacing: -0.5px;
+}
+.section-sub { font-size: 16px; color: #888888; margin-top: 12px; }
+
+/* ===== Platforms Section ===== */
+.platforms-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+}
+.platform-card {
+  background: #111111; border: 1px solid #222222; border-radius: 16px;
+  padding: 32px 20px; text-align: center; transition: border-color 0.3s, transform 0.3s;
+}
+.platform-card:hover { border-color: #333333; transform: translateY(-4px); }
+.platform-icon {
+  width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.platform-icon.tiktok { background: linear-gradient(135deg, #FF0050, #00F2EA); }
+.platform-icon.youtube { background: #FF0000; }
+.platform-icon.instagram { background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCB045); }
+.platform-icon.facebook { background: #1877F2; }
+.platform-icon svg { width: 28px; height: 28px; fill: #ffffff; }
+.platform-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.platform-desc { font-size: 13px; color: #666666; }
+
+/* ===== Cases / Data Section ===== */
+.cases-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.case-card {
+  background: #111111; border: 1px solid #222222; border-radius: 20px;
+  padding: 36px 28px; transition: border-color 0.3s;
+}
+.case-card:hover { border-color: #FF0050; }
+.case-platform {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: #FF0050; margin-bottom: 16px;
+}
+.case-platform svg { width: 16px; height: 16px; fill: #FF0050; }
+.case-account {
+  font-size: 20px; font-weight: 800; margin-bottom: 20px;
+  color: #ffffff;
+}
+.case-stat { margin-bottom: 16px; }
+.case-stat-number {
+  font-size: 48px; font-weight: 900; line-height: 1;
+  letter-spacing: -2px;
+}
+.case-stat-number.pink { color: #FF0050; }
+.case-stat-number.cyan { color: #00F2EA; }
+.case-stat-number.white { color: #ffffff; }
+.case-stat-label { font-size: 13px; color: #666666; margin-top: 4px; }
+.case-income {
+  display: inline-block; padding: 6px 14px; border-radius: 8px;
+  background: rgba(0,242,234,0.1); border: 1px solid rgba(0,242,234,0.2);
+  font-size: 14px; font-weight: 700; color: #00F2EA; margin-bottom: 16px;
+}
+.case-tag {
+  display: inline-block; padding: 4px 12px; border-radius: 6px;
+  background: #222222; font-size: 12px; color: #888888;
+}
+
+/* ===== AI Tool Chain ===== */
+.tools-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+}
+.tool-card {
+  background: #111111; border: 1px solid #222222; border-radius: 16px;
+  padding: 28px 16px; text-align: center; position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.tool-card:hover { border-color: #00F2EA; transform: translateY(-4px); }
+.tool-step {
+  position: absolute; top: 12px; left: 16px;
+  font-size: 11px; font-weight: 800; color: #333333;
+}
+.tool-icon {
+  width: 48px; height: 48px; margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.tool-icon svg { width: 28px; height: 28px; }
+.tool-name { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.tool-desc { font-size: 12px; color: #666666; line-height: 1.5; }
+
+/* ===== Monetization ===== */
+.money-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+}
+.money-card {
+  background: #111111; border: 1px solid #222222; border-radius: 16px;
+  padding: 32px 24px; transition: border-color 0.3s;
+}
+.money-card:hover { border-color: #FF0050; }
+.money-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.money-icon svg { width: 22px; height: 22px; fill: #ffffff; }
+.money-icon.pink { background: #FF0050; }
+.money-icon.cyan { background: #00F2EA; }
+.money-icon.white { background: #333333; }
+.money-icon.orange { background: #FF6B00; }
+.money-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.money-desc { font-size: 13px; color: #666666; line-height: 1.6; }
+
+/* ===== Why Choose Us ===== */
+.why-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.why-card {
+  background: #111111; border: 1px solid #222222; border-radius: 20px;
+  padding: 40px 32px; text-align: center; transition: border-color 0.3s;
+}
+.why-card:hover { border-color: #333333; }
+.why-icon {
+  width: 64px; height: 64px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.why-icon svg { width: 32px; height: 32px; fill: #ffffff; }
+.why-icon.no-face { background: linear-gradient(135deg, #FF0050, #FF6B6B); }
+.why-icon.ai-powered { background: linear-gradient(135deg, #00F2EA, #00B4AB); }
+.why-icon.replicable { background: linear-gradient(135deg, #8364E8, #5B3FC4); }
+.why-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+.why-desc { font-size: 14px; color: #888888; line-height: 1.7; }
+
+/* ===== Footer ===== */
+.footer {
+  background: #0a0a0a; border-top: 1px solid #222222; padding: 48px 0 32px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-brand { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+.footer-brand span { color: #FF0050; }
+.footer-brand-desc { font-size: 14px; color: #666666; line-height: 1.7; max-width: 300px; }
+.footer-col-title {
+  font-size: 13px; font-weight: 700; color: #888888; text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 16px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a { font-size: 14px; color: #666666; transition: color 0.2s; }
+.footer-links a:hover { color: #ffffff; }
+.footer-bottom {
+  border-top: 1px solid #222222; padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 13px; color: #555555; }
+.footer-tech { font-size: 13px; color: #555555; }
+.footer-tech span { color: #888888; }
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-menu { display: none; }
+  .nav-lang { display: none; }
+  .nav-mobile-toggle { display: block; }
+  .hero h1 { font-size: 32px; }
+  .hero-sub { font-size: 16px; }
+  .section-title { font-size: 28px; }
+  .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+  .cases-grid { grid-template-columns: 1fr; }
+  .tools-grid { grid-template-columns: repeat(3, 1fr); }
+  .money-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .case-stat-number { font-size: 40px; }
+}
+@media (max-width: 480px) {
+  .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  .money-grid { grid-template-columns: 1fr; }
+  .hero-cta { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Navigation ========== -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-logo">木嘉AI · <span>Global</span></div>
+    <ul class="nav-menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-lang">
+      <button class="active">EN</button>
+      <button>中文</button>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Toggle menu">
+      <div></div><div></div><div></div>
+    </button>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-badge">AI-Powered · No Face Reveal</div>
+    <h1>
+      不露脸 也能在<br><span class="highlight">海外赚美金</span>
+    </h1>
+    <p class="hero-sub">
+      AI视频制作 + 自动化运营 = 你的海外社媒赚钱机器<br>
+      零基础 · 全AI驱动 · 可复制变现
+    </p>
+    <div class="hero-cta">
+      <a href="#features" class="btn-primary">
+        <!-- play icon -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        了解方法
+      </a>
+      <a href="#results" class="btn-secondary">
+        <!-- trending icon -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F2EA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        看案例
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Platforms ========== -->
+<section class="section section-darker" id="platforms">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag cyan">Supported Platforms</div>
+      <h2 class="section-title">多平台全覆盖</h2>
+      <p class="section-sub">一套系统，同时运营 TikTok / YouTube / Instagram / Facebook</p>
+    </div>
+    <div class="platforms-grid">
+      <!-- TikTok -->
+      <div class="platform-card">
+        <div class="platform-icon tiktok">
+          <svg viewBox="0 0 24 24"><path d="M19.32 6.95A5.16 5.16 0 0 1 16.2 5.6V1.6h-3.6v13.2a2.76 2.76 0 0 1-2.76 2.76 2.76 2.76 0 0 1-2.76-2.76A2.76 2.76 0 0 1 10.84 12v-3.6a6.36 6.36 0 0 0-1.72.24 6.12 6.12 0 0 0-4.4 4.4A6.12 6.12 0 0 0 9.64 19.2a6.12 6.12 0 0 0 6.12-6.12V9.16a9.56 9.56 0 0 0 5.56 1.76V7.32a5.16 5.16 0 0 1-2-.13z"/></svg>
+        </div>
+        <div class="platform-name">TikTok</div>
+        <div class="platform-desc">短视频 · 爆发增长</div>
+      </div>
+      <!-- YouTube -->
+      <div class="platform-card">
+        <div class="platform-icon youtube">
+          <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.9V8.1L15.9 12l-6.3 3.9z"/></svg>
+        </div>
+        <div class="platform-name">YouTube</div>
+        <div class="platform-desc">长视频 · 持续收益</div>
+      </div>
+      <!-- Instagram -->
+      <div class="platform-card">
+        <div class="platform-icon instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1a6.7 6.7 0 0 1 2.2.4 3.6 3.6 0 0 1 1.3.8 3.6 3.6 0 0 1 .8 1.3 6.7 6.7 0 0 1 .4 2.2c.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9a6.7 6.7 0 0 1-.4 2.2 3.9 3.9 0 0 1-2.1 2.1 6.7 6.7 0 0 1-2.2.4c-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1a6.7 6.7 0 0 1-2.2-.4 3.6 3.6 0 0 1-1.3-.8 3.6 3.6 0 0 1-.8-1.3 6.7 6.7 0 0 1-.4-2.2c-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9a6.7 6.7 0 0 1 .4-2.2 3.6 3.6 0 0 1 .8-1.3 3.6 3.6 0 0 1 1.3-.8 6.7 6.7 0 0 1 2.2-.4c1.3-.1 1.7-.1 4.9-.1zM12 0C8.7 0 8.3 0 7 .1A8.8 8.8 0 0 0 3.9 1a5.6 5.6 0 0 0-2 2A8.8 8.8 0 0 0 0 7C-.1 8.3-.1 8.7 0 12s0 3.7.1 5a8.8 8.8 0 0 0 1 3.1 5.6 5.6 0 0 0 2 2 8.8 8.8 0 0 0 3.1 1c1.3.1 1.7.1 5 .1s3.7 0 5-.1a8.8 8.8 0 0 0 3.1-1 5.6 5.6 0 0 0 2-2 8.8 8.8 0 0 0 1-3.1c.1-1.3.1-1.7.1-5s0-3.7-.1-5a8.8 8.8 0 0 0-1-3.1 5.6 5.6 0 0 0-2-2A8.8 8.8 0 0 0 17 0 123 123 0 0 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.8-11.5a1.4 1.4 0 1 0-2.8 0 1.4 1.4 0 0 0 2.8 0z"/></svg>
+        </div>
+        <div class="platform-name">Instagram</div>
+        <div class="platform-desc">Reels · 品牌合作</div>
+      </div>
+      <!-- Facebook -->
+      <div class="platform-card">
+        <div class="platform-icon facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.1a12 12 0 1 0-13.9 11.8v-8.4h-3v-3.4h3V9.7c0-3 1.8-4.6 4.5-4.6 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.3h3.4l-.5 3.4h-2.9v8.4A12 12 0 0 0 24 12.1z"/></svg>
+        </div>
+        <div class="platform-name">Facebook</div>
+        <div class="platform-desc">Page · 广告变现</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Case Studies / Data ========== -->
+<section class="section section-dark" id="results">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag pink">Real Results</div>
+      <h2 class="section-title">真实案例数据</h2>
+      <p class="section-sub">AI全自动运营，不露脸照样涨粉变现</p>
+    </div>
+    <div class="cases-grid">
+      <!-- Case 1 -->
+      <div class="case-card">
+        <div class="case-platform">
+          <svg viewBox="0 0 24 24"><path d="M19.32 6.95A5.16 5.16 0 0 1 16.2 5.6V1.6h-3.6v13.2a2.76 2.76 0 0 1-2.76 2.76A2.76 2.76 0 0 1 6.92 15.2a2.76 2.76 0 0 1 2.76-2.76V8.8a6.36 6.36 0 0 0-1.72.24 6.12 6.12 0 0 0-4.4 4.4A6.12 6.12 0 0 0 9.64 19.2a6.12 6.12 0 0 0 6.12-6.12V9.16a9.56 9.56 0 0 0 5.56 1.76V7.32a5.16 5.16 0 0 1-2-.13z"/></svg>
+          TikTok
+        </div>
+        <div class="case-account">@CutePawsDaily</div>
+        <div class="case-stat">
+          <div class="case-stat-number pink">12万+</div>
+          <div class="case-stat-label">3个月涨粉</div>
+        </div>
+        <div class="case-income">月收入 $2,000+</div>
+        <div style="margin-top: 12px;">
+          <span class="case-tag">宠物号</span>
+          <span class="case-tag" style="margin-left: 6px;">不露脸</span>
+        </div>
+      </div>
+      <!-- Case 2 -->
+      <div class="case-card">
+        <div class="case-platform">
+          <svg viewBox="0 0 24 24"><path d="M19.32 6.95A5.16 5.16 0 0 1 16.2 5.6V1.6h-3.6v13.2a2.76 2.76 0 0 1-2.76 2.76A2.76 2.76 0 0 1 6.92 15.2a2.76 2.76 0 0 1 2.76-2.76V8.8a6.36 6.36 0 0 0-1.72.24 6.12 6.12 0 0 0-4.4 4.4A6.12 6.12 0 0 0 9.64 19.2a6.12 6.12 0 0 0 6.12-6.12V9.16a9.56 9.56 0 0 0 5.56 1.76V7.32a5.16 5.16 0 0 1-2-.13z"/></svg>
+          TikTok
+        </div>
+        <div class="case-account">@SatisfyingVibes</div>
+        <div class="case-stat">
+          <div class="case-stat-number cyan">8万+</div>
+          <div class="case-stat-label">2个月涨粉</div>
+        </div>
+        <div class="case-income">月收入 $1,500+</div>
+        <div style="margin-top: 12px;">
+          <span class="case-tag">解压号</span>
+          <span class="case-tag" style="margin-left: 6px;">AI合成</span>
+        </div>
+      </div>
+      <!-- Case 3 -->
+      <div class="case-card">
+        <div class="case-platform">
+          <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.9V8.1L15.9 12l-6.3 3.9z"/></svg>
+          YouTube
+        </div>
+        <div class="case-account">@DailyMotivation</div>
+        <div class="case-stat">
+          <div class="case-stat-number white">20万+</div>
+          <div class="case-stat-label">4个月涨粉</div>
+        </div>
+        <div class="case-income">月收入 $3,500+</div>
+        <div style="margin-top: 12px;">
+          <span class="case-tag">励志号</span>
+          <span class="case-tag" style="margin-left: 6px;">全AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== AI Tool Chain ========== -->
+<section class="section section-darker" id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag cyan">AI Tool Chain</div>
+      <h2 class="section-title">5步全自动 AI 工作流</h2>
+      <p class="section-sub">从脚本到发布，全程AI驱动，无需人工干预</p>
+    </div>
+    <div class="tools-grid">
+      <!-- Step 1 -->
+      <div class="tool-card">
+        <div class="tool-step">01</div>
+        <div class="tool-icon" style="color:#FF0050;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF0050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="tool-name">AI脚本生成</div>
+        <div class="tool-desc">输入主题，AI自动生成爆款脚本</div>
+      </div>
+      <!-- Step 2 -->
+      <div class="tool-card">
+        <div class="tool-step">02</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00F2EA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </div>
+        <div class="tool-name">AI配音</div>
+        <div class="tool-desc">多语言AI语音，不露脸也有好声音</div>
+      </div>
+      <!-- Step 3 -->
+      <div class="tool-card">
+        <div class="tool-step">03</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>
+        </div>
+        <div class="tool-name">AI视频生成</div>
+        <div class="tool-desc">自动匹配素材，生成成品视频</div>
+      </div>
+      <!-- Step 4 -->
+      <div class="tool-card">
+        <div class="tool-step">04</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8364E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="tool-name">自动发布</div>
+        <div class="tool-desc">定时发布到多平台，24小时不间断</div>
+      </div>
+      <!-- Step 5 -->
+      <div class="tool-card">
+        <div class="tool-step">05</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFA800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <div class="tool-name">数据分析</div>
+        <div class="tool-desc">实时监控数据，AI优化内容策略</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Monetization ========== -->
+<section class="section section-dark" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag pink">Monetization</div>
+      <h2 class="section-title">4大变现路径</h2>
+      <p class="section-sub">粉丝起来之后，多种方法把钱赚到手</p>
+    </div>
+    <div class="money-grid">
+      <!-- Way 1 -->
+      <div class="money-card">
+        <div class="money-icon pink">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="money-title">平台创作激励</div>
+        <div class="money-desc">TikTok Creator Fund / YouTube Partner Program，播放量直接变现</div>
+      </div>
+      <!-- Way 2 -->
+      <div class="money-card">
+        <div class="money-icon cyan">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="money-title">品牌合作</div>
+        <div class="money-desc">粉丝量上来后，品牌主动找你合作推广，一条广告$500-$5000</div>
+      </div>
+      <!-- Way 3 -->
+      <div class="money-card">
+        <div class="money-icon white">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <div class="money-title">联盟营销</div>
+        <div class="money-desc">在视频中挂Amazon/AliExpress联盟链接，赚取佣金</div>
+      </div>
+      <!-- Way 4 -->
+      <div class="money-card">
+        <div class="money-icon orange">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div class="money-title">自有产品</div>
+        <div class="money-desc">打造自己的品牌产品，用社媒流量直接带货</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Why Choose Us ========== -->
+<section class="section section-darker">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag cyan">Why Us</div>
+      <h2 class="section-title">为什么选木嘉AI</h2>
+    </div>
+    <div class="why-grid">
+      <!-- Value 1 -->
+      <div class="why-card">
+        <div class="why-icon no-face">
+          <svg viewBox="0 0 24 24"><path d="M17.94 6.38A8.5 8.5 0 0 0 12 4.5a8.5 8.5 0 0 0-5.94 1.88M9.13 19.62A8.5 8.5 0 0 0 12 19.5a8.5 8.5 0 0 0 5.94-1.88"/><line x1="1" y1="1" x2="23" y2="23" stroke="#ffffff" stroke-width="2"/></svg>
+        </div>
+        <div class="why-title">完全不露脸</div>
+        <div class="why-desc">不需要出镜、不需要配音、不需要拍摄<br>保护隐私，零社交压力，专注内容本身</div>
+      </div>
+      <!-- Value 2 -->
+      <div class="why-card">
+        <div class="why-icon ai-powered">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </div>
+        <div class="why-title">全程AI驱动</div>
+        <div class="why-desc">脚本、配音、视频、发布、数据分析<br>端到端AI自动化，每天只需10分钟管理</div>
+      </div>
+      <!-- Value 3 -->
+      <div class="why-card">
+        <div class="why-icon replicable">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </div>
+        <div class="why-title">模式可复制</div>
+        <div class="why-desc">一套方法论，复制N个账号<br>矩阵化运营，收益指数级增长</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Footer ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">木嘉AI · <span>Global</span></div>
+        <div class="footer-brand-desc">
+          AI驱动的海外社媒涨粉系统，帮助创作者在TikTok、YouTube、Instagram等平台实现不露脸变现。
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">产品</div>
+        <ul class="footer-links">
+          <li><a href="#">AI视频生成</a></li>
+          <li><a href="#">自动发布</a></li>
+          <li><a href="#">数据分析</a></li>
+          <li><a href="#">账号管理</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">资源</div>
+        <ul class="footer-links">
+          <li><a href="#">使用教程</a></li>
+          <li><a href="#">案例库</a></li>
+          <li><a href="#">博客</a></li>
+          <li><a href="#">更新日志</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">公司</div>
+        <ul class="footer-links">
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">联系我们</a></li>
+          <li><a href="#">隐私政策</a></li>
+          <li><a href="#">服务条款</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2024 木嘉AI Global. All rights reserved.</div>
+      <div class="footer-tech">由<span>蓝图科技</span>提供技术支持</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

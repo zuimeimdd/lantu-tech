@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>木嘉AI · 知识付费 - 学一门技能 改变你的收入</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #FFFBEB;
+      color: #1E293B;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-top: 60px;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== CSS Variables ===== */
+    :root {
+      --color-primary: #D97706;
+      --color-primary-light: #fef3c7;
+      --color-primary-dark: #b8650a;
+      --color-secondary: #7C3AED;
+      --color-bg: #FFFBEB;
+      --color-card: #ffffff;
+      --color-text: #1E293B;
+      --color-text-secondary: #64748B;
+      --color-border: #f0e6d2;
+      --color-success: #059669;
+      --color-danger: #ef4444;
+    }
+
+    /* ===== Layout ===== */
+    .container { width: 100%; max-width: 420px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 768px) { .container { max-width: 720px; } }
+    @media (min-width: 1024px) { .container { max-width: 1200px; } }
+
+    section { padding: 56px 0; }
+
+    /* ===== Header / Nav ===== */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255, 251, 235, 0.97);
+      border-bottom: 1px solid var(--color-border);
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--color-primary); }
+    .logo-icon {
+      width: 32px; height: 32px; background: var(--color-primary); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 18px; height: 18px; }
+    .nav { display: none; gap: 24px; list-style: none; }
+    .nav a { font-size: 14px; color: var(--color-text-secondary); font-weight: 500; transition: color 0.2s; }
+    .nav a:hover, .nav a.active { color: var(--color-primary); }
+    .header-cta {
+      font-size: 13px; background: var(--color-primary); color: #fff;
+      padding: 6px 14px; border-radius: 6px; font-weight: 600; transition: background 0.2s;
+    }
+    .header-cta:hover { background: var(--color-primary-dark); }
+    .nav-mobile-toggle { display: flex; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-mobile-toggle svg { width: 24px; height: 24px; stroke: var(--color-text); fill: none; stroke-width: 2; stroke-linecap: round; }
+    @media (min-width: 768px) { .nav { display: flex; } .nav-mobile-toggle { display: none; } }
+
+    /* ===== Hero ===== */
+    .hero {
+      padding: 80px 0 60px;
+      background: linear-gradient(165deg, #fef3c7 0%, #FFFBEB 40%, #FFFBEB 100%);
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--color-card); border: 1px solid #fed7aa;
+      border-radius: 20px; padding: 4px 14px;
+      font-size: 12px; color: var(--color-primary); font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; background: var(--color-success); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .hero h1 { font-size: 28px; font-weight: 800; color: var(--color-text); line-height: 1.3; margin-bottom: 12px; }
+    .hero h1 span { color: var(--color-primary); }
+    .hero-sub { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 24px; line-height: 1.6; }
+    .hero-sub span { display: inline-flex; align-items: center; gap: 4px; }
+    .hero-sub svg { width: 14px; height: 14px; fill: var(--color-primary); }
+    .search-box {
+      display: flex; max-width: 460px; margin: 0 auto 24px;
+      border: 2px solid var(--color-border); border-radius: 12px; overflow: hidden;
+      background: var(--color-card); transition: border-color 0.2s;
+    }
+    .search-box:focus-within { border-color: var(--color-primary); }
+    .search-box input {
+      flex: 1; border: none; outline: none; padding: 13px 16px; font-size: 14px;
+      background: transparent; color: var(--color-text);
+    }
+    .search-box input::placeholder { color: #a0aec0; }
+    .search-box button {
+      background: var(--color-primary); border: none; color: #fff; padding: 0 20px;
+      cursor: pointer; display: flex; align-items: center; transition: background 0.2s;
+    }
+    .search-box button:hover { background: var(--color-primary-dark); }
+    .search-box button svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--color-primary); color: #fff; font-size: 15px; font-weight: 700;
+      padding: 13px 36px; border-radius: 10px; transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(217,119,6,0.3);
+    }
+    .hero-cta:hover { background: var(--color-primary-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(217,119,6,0.4); }
+
+    /* ===== Course Categories ===== */
+    .categories { padding: 24px 0 8px; }
+    .categories-scroll {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .categories-scroll::-webkit-scrollbar { display: none; }
+    .cat-tag {
+      flex-shrink: 0; padding: 7px 18px; border-radius: 999px; font-size: 13px; font-weight: 500;
+      border: 1.5px solid var(--color-border); background: var(--color-card);
+      color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .cat-tag:hover, .cat-tag.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+    /* ===== Section Common ===== */
+    .section-header { text-align: center; margin-bottom: 32px; }
+    .section-header h2 { font-size: 22px; font-weight: 800; color: var(--color-text); margin-bottom: 6px; }
+    .section-header p { font-size: 14px; color: var(--color-text-secondary); }
+    .section-more { font-size: 13px; color: var(--color-primary); font-weight: 600; cursor: pointer; }
+    .section-more:hover { text-decoration: underline; }
+    .section-header-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .section-header-bar h2 { font-size: 22px; font-weight: 800; color: var(--color-text); }
+    @media (min-width: 1024px) { .hero h1 { font-size: 36px; } }
+
+    /* ===== Course Grid ===== */
+    .course-grid { display: grid; gap: 20px; }
+    @media (min-width: 640px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .course-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .course-card {
+      background: var(--color-card); border-radius: 16px; border: 1.5px solid var(--color-border);
+      overflow: hidden; transition: all 0.3s;
+    }
+    .course-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: #fed7aa; }
+    .course-cover {
+      height: 150px; display: flex; align-items: center; justify-content: center;
+      padding: 20px; position: relative; overflow: hidden;
+    }
+    .course-cover-text {
+      font-size: 18px; font-weight: 800; color: #fff; text-align: center;
+      line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.15); position: relative; z-index: 1;
+    }
+    .course-tag {
+      position: absolute; top: 12px; left: 12px;
+      color: #fff; font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 4px; z-index: 2;
+    }
+    .course-tag.best { background: var(--color-primary); }
+    .course-tag.new { background: var(--color-secondary); }
+    .course-tag.hot { background: var(--color-danger); }
+    .course-tag.adv { background: var(--color-success); }
+    .course-body { padding: 18px; }
+    .course-name { font-size: 15px; font-weight: 700; color: var(--color-text); margin-bottom: 10px; line-height: 1.4; }
+    .course-highlights { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .course-highlights li {
+      font-size: 12px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px;
+      list-style: none;
+    }
+    .course-highlights li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--color-primary); flex-shrink: 0;
+    }
+    .course-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .course-price { font-size: 24px; font-weight: 800; color: var(--color-primary); }
+    .course-price small { font-size: 12px; font-weight: 400; color: #a0aec0; text-decoration: line-through; margin-left: 4px; }
+    .course-buy {
+      background: var(--color-primary); color: #fff; border: none; padding: 8px 18px;
+      border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .course-buy:hover { background: var(--color-primary-dark); transform: scale(1.04); }
+
+    /* ===== Why Choose Us ===== */
+    .why { background: var(--color-card); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+    .why-grid { display: grid; gap: 16px; }
+    @media (min-width: 640px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .why-grid { grid-template-columns: repeat(4, 1fr); } }
+    .why-card {
+      background: var(--color-bg); border-radius: 14px; padding: 28px 20px; text-align: center;
+      border: 1px solid var(--color-border); transition: all 0.3s;
+    }
+    .why-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); border-color: #fed7aa; }
+    .why-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+    }
+    .why-icon svg { width: 26px; height: 26px; fill: #fff; }
+    .why-card h3 { font-size: 15px; font-weight: 700; color: var(--color-text); margin-bottom: 6px; }
+    .why-card p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+
+    /* ===== Reviews ===== */
+    .reviews-grid { display: grid; gap: 20px; }
+    @media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+    .review-card {
+      background: var(--color-card); border: 1.5px solid var(--color-border);
+      border-radius: 14px; padding: 24px; transition: box-shadow 0.2s;
+    }
+    .review-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .review-stars { display: flex; gap: 2px; margin-bottom: 12px; }
+    .review-stars svg { width: 16px; height: 16px; fill: #f59e0b; }
+    .review-text { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 16px; }
+    .review-author { display: flex; align-items: center; gap: 12px; }
+    .review-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .review-name { font-size: 14px; font-weight: 600; color: var(--color-text); }
+    .review-meta { font-size: 12px; color: #a0aec0; }
+
+    /* ===== FAQ (No JS - uses <details>) ===== */
+    .faq { background: var(--color-card); border-top: 1px solid var(--color-border); }
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item {
+      border: 1.5px solid var(--color-border); border-radius: 12px; margin-bottom: 12px;
+      background: var(--color-bg); overflow: hidden; transition: border-color 0.2s;
+    }
+    .faq-item[open] { border-color: #fed7aa; }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; font-size: 15px; font-weight: 600; color: var(--color-text);
+      cursor: pointer; list-style: none; transition: background 0.2s;
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q:hover { background: #fef3c7; }
+    .faq-q svg { width: 20px; height: 20px; stroke: var(--color-primary); fill: none; stroke-width: 2; stroke-linecap: round; transition: transform 0.2s; flex-shrink: 0; }
+    .faq-item[open] .faq-q svg { transform: rotate(180deg); }
+    .faq-a { padding: 0 20px 16px; font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; }
+
+    /* ===== Footer ===== */
+    .footer { background: #1a1a2e; color: #94A3B8; padding: 48px 0 24px; }
+    .footer-grid { display: grid; gap: 28px; }
+    @media (min-width: 768px) { .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; } }
+    .footer-brand h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .footer-brand p { font-size: 13px; line-height: 1.7; }
+    .footer-col h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col li { font-size: 13px; cursor: pointer; transition: color 0.2s; }
+    .footer-col li:hover { color: var(--color-primary); }
+    .footer-col li::before { content: '›'; margin-right: 6px; color: var(--color-primary); }
+    .footer-bottom {
+      border-top: 1px solid #2d2d44; margin-top: 32px; padding-top: 16px;
+      display: flex; flex-direction: column; gap: 8px; align-items: center;
+      font-size: 12px; text-align: center;
+    }
+    @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+    .footer-powered { color: #64748B; }
+    .footer-powered a { color: var(--color-primary); font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="header">
+    <div class="header-inner container">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        </div>
+        木嘉AI · 知识付费
+      </a>
+      <nav class="nav">
+        <a href="#" class="active">首页</a>
+        <a href="#courses">全部课程</a>
+        <a href="#features">会员特权</a>
+        <a href="#footer">关于我们</a>
+      </nav>
+      <a href="#courses" class="header-cta">浏览课程</a>
+      <button class="nav-mobile-toggle" aria-label="菜单">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        已有 12,680+ 学员在这里提升技能
+      </div>
+      <h1>学一门技能<br><span>改变你的收入</span></h1>
+      <div class="hero-sub">
+        <span>
+          <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+          精品课程
+        </span>
+        <span>
+          <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+          自动交付
+        </span>
+        <span>
+          <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+          永久回看
+        </span>
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="搜索课程，如：AI绘画、Python、短视频..." />
+        <button aria-label="搜索">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+      <a href="#courses" class="hero-cta">浏览全部课程 →</a>
+    </div>
+  </section>
+
+  <!-- ===== Categories ===== -->
+  <section class="categories">
+    <div class="container">
+      <div class="categories-scroll">
+        <div class="cat-tag active">全部</div>
+        <div class="cat-tag">AI工具</div>
+        <div class="cat-tag">副业赚钱</div>
+        <div class="cat-tag">自媒体运营</div>
+        <div class="cat-tag">编程技术</div>
+        <div class="cat-tag">设计创作</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Courses ===== -->
+  <section class="courses" id="courses">
+    <div class="container">
+      <div class="section-header-bar">
+        <h2>热门课程</h2>
+        <a href="#" class="section-more">查看全部 →</a>
+      </div>
+      <div class="course-grid">
+
+        <!-- Course 1 -->
+        <div class="course-card">
+          <div class="course-cover" style="background: linear-gradient(135deg, #D97706, #f59e0b);">
+            <span class="course-tag best">畅销</span>
+            <div class="course-cover-text">AI绘画<br>从入门到接单</div>
+          </div>
+          <div class="course-body">
+            <div class="course-name">AI绘画从入门到接单：Midjourney+Stable Diffusion实战</div>
+            <div class="course-highlights">
+              <li>42节视频课 · 永久回看</li>
+              <li>附赠提示词模板库</li>
+              <li>学员群答疑指导</li>
+            </div>
+            <div class="course-bottom">
+              <div class="course-price">¥299 <small>¥599</small></div>
+              <button class="course-buy">立即购买</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="course-card">
+          <div class="course-cover" style="background: linear-gradient(135deg, #7C3AED, #a78bfa);">
+            <span class="course-tag new">新课</span>
+            <div class="course-cover-text">ChatGPT<br>高效工作法</div>
+          </div>
+          <div class="course-body">
+            <div class="course-name">ChatGPT高效工作法：让AI帮你每天节省2小时</div>
+            <div class="course-highlights">
+              <li>28节视频课 · 永久回看</li>
+              <li>100+提示词模板</li>
+              <li>实战案例讲解</li>
+            </div>
+            <div class="course-bottom">
+              <div class="course-price">¥199 <small>¥399</small></div>
+              <button class="course-buy">立即购买</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="course-card">
+          <div class="course-cover" style="background: linear-gradient(135deg, #059669, #34d399);">
+            <div class="course-cover-text">短视频剪辑<br>赚钱指南</div>
+          </div>
+          <div class="course-body">
+            <div class="course-name">短视频剪辑赚钱指南：剪映+CapCut从0到变现</div>
+            <div class="course-highlights">
+              <li>35节视频课 · 永久回看</li>
+              <li>附赠转场特效包</li>
+              <li>变现路径全解析</li>
+            </div>
+            <div class="course-bottom">
+              <div class="course-price">¥249 <small>¥499</small></div>
+              <button class="course-buy">立即购买</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 4 -->
+        <div class="course-card">
+          <div class="course-cover" style="background: linear-gradient(135deg, #2563eb, #60a5fa);">
+            <span class="course-tag adv">进阶</span>
+            <div class="course-cover-text">Python<br>自动化办公</div>
+          </div>
+          <div class="course-body">
+            <div class="course-name">Python自动化办公：Excel/Word/PDF一键处理</div>
+            <div class="course-highlights">
+              <li>50节视频课 · 永久回看</li>
+              <li>配套源码+练习文件</li>
+              <li>实战项目3个</li>
+            </div>
+            <div class="course-bottom">
+              <div class="course-price">¥399 <small>¥799</small></div>
+              <button class="course-buy">立即购买</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 5 -->
+        <div class="course-card">
+          <div class="course-cover" style="background: linear-gradient(135deg, #e11d48, #fb7185);">
+            <span class="course-tag hot">热门</span>
+            <div class="course-cover-text">小红书运营<br>涨粉秘籍</div>
+          </div>
+          <div class="course-body">
+            <div class="course-name">小红书运营涨粉秘籍：从0到10万粉丝实战</div>
+            <div class="course-highlights">
+              <li>36节视频课 · 永久回看</li>
+              <li>爆款标题模板100个</li>
+              <li>账号诊断1次</li>
+            </div>
+            <div class="course-bottom">
+              <div class="course-price">¥159 <small>¥299</small></div>
+              <button class="course-buy">立即购买</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 6 -->
+        <div class="course-card">
+          <div class="course-cover" style="background: linear-gradient(135deg, #0891b2, #22d3ee);">
+            <div class="course-cover-text">AI写作<br>变现训练营</div>
+          </div>
+          <div class="course-body">
+            <div class="course-name">AI写作变现训练营：用ChatGPT打造写作副业</div>
+            <div class="course-highlights">
+              <li>38节视频课 · 永久回看</li>
+              <li>接单渠道推荐</li>
+              <li>作业批改服务</li>
+            </div>
+            <div class="course-bottom">
+              <div class="course-price">¥349 <small>¥699</small></div>
+              <button class="course-buy">立即购买</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Why Choose Us ===== -->
+  <section class="why" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>为什么选择我们</h2>
+        <p>专为知识创作者打造的一站式解决方案</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon" style="background: linear-gradient(135deg, #D97706, #f59e0b);">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>自动交付</h3>
+          <p>支付完成自动发送课程内容到用户邮箱，无需人工介入，7×24小时自动交付</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" style="background: linear-gradient(135deg, #7C3AED, #a78bfa);">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>无需客服</h3>
+          <p>自动化订单管理、自动发送课程链接，一个人也能运营完整的知识付费业务</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" style="background: linear-gradient(135deg, #059669, #34d399);">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
+          </div>
+          <h3>一次设置</h3>
+          <p>上传课程、设置价格，之后就是被动收入。系统帮你处理所有技术细节</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" style="background: linear-gradient(135deg, #2563eb, #60a5fa);">
+            <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <h3>持续收入</h3>
+          <p>支持订阅制、会员制，打造持续现金流。系统自动处理续费和会员管理，一次搭建长期收益</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Reviews ===== -->
+  <section class="reviews">
+    <div class="container">
+      <div class="section-header">
+        <h2>学员真实评价</h2>
+        <p>来自已购学员的真实反馈</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+          </div>
+          <div class="review-text">"AI绘画课太实用了！学完第二周就在闲鱼接到了第一单，课程内容很系统，从基础到接单技巧都有，比自己摸索快太多了，物超所值！"</div>
+          <div class="review-author">
+            <div class="review-avatar" style="background:#D97706;">李</div>
+            <div>
+              <div class="review-name">李同学</div>
+              <div class="review-meta">购买了 AI绘画从入门到接单</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+          </div>
+          <div class="review-text">"作为一个完全不懂编程的小白，Python课让我真的实现了办公自动化。以前每天要花2小时处理的Excel，现在5分钟搞定。强烈推荐！"</div>
+          <div class="review-author">
+            <div class="review-avatar" style="background:#7C3AED;">王</div>
+            <div>
+              <div class="review-name">王同学</div>
+              <div class="review-meta">购买了 Python自动化办公</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.2l-3.5 3.4.8 4.9L8 11.5 3.7 14.5l.8-4.9L1 6.2l4.8-.7z"/></svg>
+          </div>
+          <div class="review-text">"小红书课真的是手把手教学，照着做完第一个月就看到了明显涨粉效果，现在内容越做越顺手。感谢老师分享这么干货的内容！"</div>
+          <div class="review-author">
+            <div class="review-avatar" style="background:#e11d48;">张</div>
+            <div>
+              <div class="review-name">张同学</div>
+              <div class="review-meta">购买了 小红书运营涨粉秘籍</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2>常见问题</h2>
+        <p>还有疑问？这里或许有答案</p>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary class="faq-q">
+            如何购买课程？
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-a">点击课程卡片下方的「立即购买」按钮，进入支付页面完成支付即可。支持微信支付、支付宝、银行卡等多种支付方式。支付完成后，课程内容将自动发送到您的注册邮箱。</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">
+            购买后如何观看课程？
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-a">支付完成后，您会收到一封包含课程访问链接的邮件。点击链接即可进入课程学习页面，在手机、平板、电脑上都可以观看。所有课程支持永久回看，不限次数。</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">
+            支持退款吗？
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-a">我们提供7天无理由退款保障。购买后7天内，如果您对课程不满意，可以申请全额退款，无需任何理由。申请退款后，退款将在1-3个工作日内原路返回您的支付账户。</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">
+            如何成为讲师，在这里卖课？
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-a">我们欢迎优质内容创作者入驻！点击页面顶部「关于」了解入驻详情，或直接在首页底部联系我们。入驻免费，平台仅收取10%的技术服务费。我们提供完整的课程上传、支付、自动交付一体化解决方案。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>木嘉AI · 知识付费</h3>
+          <p>专注于优质数字内容创作与分发，帮助每一位创作者实现知识变现，帮助每一位学习者提升技能、改变收入。</p>
+        </div>
+        <div class="footer-col">
+          <h4>课程分类</h4>
+          <ul>
+            <li>AI工具</li>
+            <li>副业赚钱</li>
+            <li>自媒体运营</li>
+            <li>编程技术</li>
+            <li>设计创作</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>关于我们</h4>
+          <ul>
+            <li>平台介绍</li>
+            <li>讲师入驻</li>
+            <li>合作咨询</li>
+            <li>联系我们</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>帮助中心</h4>
+          <ul>
+            <li>购买指南</li>
+            <li>观看教程</li>
+            <li>退款政策</li>
+            <li>常见问题</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2024 木嘉AI · 知识付费 版权所有</div>
+        <div class="footer-powered">由 <a href="#">蓝图科技</a> 提供技术支持</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

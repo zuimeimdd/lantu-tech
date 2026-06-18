@@ -1,0 +1,12 @@
+# 内部文件，不公开部署
+talk-script.html
+staff.html
+choice.html
+haoka-landing.html
+
+# 截图脚本
+screenshot*.js
+
+# 临时图片（二维码单独保留需要的）
+haoka-qrcode.png
+qrcode-mujia.png

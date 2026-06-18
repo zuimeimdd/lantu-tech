@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蓝图科技 · 虚拟产品出海全链路服务商</title>
+<meta name="description" content="蓝图科技提供号卡独立站、AI Token平台、知识付费独立站、海外社媒AI运营四条已跑通的产品线。花2~5k，给你一整套虚拟产品赚钱系统。">
+<style>
+/* ===== Reset & Variables ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --brand: #4F46E5;
+  --brand-dark: #3730A3;
+  --brand-light: #EEF2FF;
+  --c-haoka: #0284C7;
+  --c-token: #4F46E5;
+  --c-knowledge: #D97706;
+  --c-overseas: #E11D48;
+  --text: #0F172A;
+  --t2: #475569;
+  --t3: #94A3B8;
+  --bg: #F8FAFC;
+  --card: #FFFFFF;
+  --border: #E2E8F0;
+  --radius: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.1);
+}
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background: var(--bg); color: var(--text); line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a { text-decoration:none; color:inherit; }
+img { max-width:100%; display:block; }
+.container { width:100%; max-width:1200px; margin:0 auto; padding:0 24px; }
+
+/* ===== Nav ===== */
+.navbar {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(255,255,255,.92); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.navbar .container {
+  display:flex; align-items:center; justify-content:space-between; height:64px;
+}
+.nav-brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; color:var(--brand); }
+.nav-brand-icon {
+  width:34px; height:34px; background:var(--brand); border-radius:8px;
+  display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:900;
+}
+.nav-links { display:flex; gap:32px; list-style:none; }
+.nav-links a { font-size:14px; font-weight:500; color:var(--t2); transition:color .2s; }
+.nav-links a:hover { color:var(--brand); }
+.nav-cta {
+  font-size:13px; font-weight:600; background:var(--brand); color:#fff;
+  padding:8px 20px; border-radius:8px; transition:all .2s;
+}
+.nav-cta:hover { background:var(--brand-dark); transform:translateY(-1px); }
+@media (max-width:768px) { .nav-links { display:none; } }
+
+/* ===== Hero ===== */
+.hero {
+  padding:140px 0 80px;
+  background: linear-gradient(170deg, #EEF2FF 0%, #F8FAFC 40%, #F8FAFC 100%);
+  text-align:center; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; top:-120px; right:-80px;
+  width:400px; height:400px; background:radial-gradient(circle, rgba(79,70,229,.08) 0%, transparent 70%);
+  border-radius:50%;
+}
+.hero::after {
+  content:''; position:absolute; bottom:-60px; left:-60px;
+  width:300px; height:300px; background:radial-gradient(circle, rgba(217,119,6,.06) 0%, transparent 70%);
+  border-radius:50%;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--card); border:1px solid #C7D2FE;
+  border-radius:20px; padding:4px 16px; font-size:12px; font-weight:600; color:var(--brand);
+  margin-bottom:24px; position:relative; z-index:1;
+}
+.hero-badge .dot { width:6px; height:6px; background:#10B981; border-radius:50%; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.hero h1 { font-size:42px; font-weight:900; letter-spacing:-1px; line-height:1.2; position:relative; z-index:1; margin-bottom:16px; }
+.hero h1 em { font-style:normal; color:var(--brand); }
+.hero .hero-sub { font-size:16px; color:var(--t2); position:relative; z-index:1; margin-bottom:32px; line-height:1.7; }
+.hero-actions { position:relative; z-index:1; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.btn-primary {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--brand); color:#fff; font-size:15px; font-weight:700;
+  padding:14px 36px; border-radius:10px; transition:all .2s;
+  box-shadow:0 4px 16px rgba(79,70,229,.3);
+}
+.btn-primary:hover { background:var(--brand-dark); transform:translateY(-2px); box-shadow:0 6px 24px rgba(79,70,229,.4); }
+.btn-outline {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--card); color:var(--brand); font-size:15px; font-weight:700;
+  padding:14px 36px; border-radius:10px; border:2px solid #C7D2FE; transition:all .2s;
+}
+.btn-outline:hover { border-color:var(--brand); background:var(--brand-light); }
+
+@media (max-width:768px) {
+  .hero { padding:100px 0 56px; }
+  .hero h1 { font-size:30px; }
+  .hero .hero-sub { font-size:14px; }
+}
+
+/* ===== Section Common ===== */
+.section { padding:80px 0; }
+.section-label {
+  display:inline-block; font-size:12px; font-weight:700; letter-spacing:1px;
+  color:var(--brand); background:var(--brand-light); padding:4px 16px; border-radius:6px;
+  margin-bottom:16px; text-transform:uppercase;
+}
+.section-title { font-size:32px; font-weight:900; letter-spacing:-.5px; margin-bottom:12px; line-height:1.3; }
+.section-sub { font-size:16px; color:var(--t2); max-width:600px; }
+.section-header { text-align:center; margin-bottom:48px; }
+.section-header .section-sub { margin:0 auto; }
+@media (max-width:768px) {
+  .section { padding:56px 0; }
+  .section-title { font-size:24px; }
+  .section-header { margin-bottom:32px; }
+}
+
+/* ===== Product Cards ===== */
+.products-grid {
+  display:grid; gap:24px;
+  grid-template-columns:repeat(2,1fr);
+}
+@media (max-width:768px) { .products-grid { grid-template-columns:1fr; } }
+
+.product-card {
+  background:var(--card); border-radius:var(--radius);
+  border:1.5px solid var(--border); overflow:hidden;
+  transition:all .3s; display:flex; flex-direction:column;
+}
+.product-card:hover {
+  transform:translateY(-4px); box-shadow:var(--shadow-lg);
+  border-color:transparent;
+}
+
+.product-cover {
+  padding:36px 28px 20px; position:relative;
+  display:flex; align-items:center; gap:16px;
+}
+.product-cover.haoka { background:linear-gradient(135deg, #E0F2FE, #BAE6FD); }
+.product-cover.token { background:linear-gradient(135deg, #EEF2FF, #C7D2FE); }
+.product-cover.knowledge { background:linear-gradient(135deg, #FFFBEB, #FDE68A); }
+.product-cover.overseas { background:linear-gradient(135deg, #FFE4E6, #FECDD3); }
+
+.product-icon {
+  width:56px; height:56px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0;
+}
+.product-icon.haoka { background:var(--c-haoka); }
+.product-icon.token { background:var(--c-token); }
+.product-icon.knowledge { background:var(--c-knowledge); }
+.product-icon.overseas { background:var(--c-overseas); }
+
+.product-cover h3 { font-size:20px; font-weight:800; line-height:1.3; }
+.product-cover .pc-badge {
+  position:absolute; top:14px; right:14px;
+  font-size:11px; font-weight:700; padding:3px 10px; border-radius:4px;
+}
+.pc-badge.haoka { background:var(--c-haoka); color:#fff; }
+.pc-badge.token { background:var(--c-token); color:#fff; }
+.pc-badge.knowledge { background:var(--c-knowledge); color:#fff; }
+.pc-badge.overseas { background:var(--c-overseas); color:#fff; }
+
+.product-body { padding:20px 28px 24px; flex:1; display:flex; flex-direction:column; }
+.product-body p { font-size:14px; color:var(--t2); line-height:1.7; margin-bottom:16px; flex:1; }
+.product-features { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.product-feature {
+  font-size:12px; font-weight:600; padding:4px 12px; border-radius:6px;
+}
+.product-feature.haoka { background:#E0F2FE; color:var(--c-haoka); }
+.product-feature.token { background:#EEF2FF; color:var(--c-token); }
+.product-feature.knowledge { background:#FFFBEB; color:var(--c-knowledge); }
+.product-feature.overseas { background:#FFE4E6; color:var(--c-overseas); }
+
+.product-actions { display:flex; gap:10px; }
+.btn-demo {
+  flex:1; text-align:center; font-size:13px; font-weight:700;
+  padding:10px 0; border-radius:8px; transition:all .2s; cursor:pointer;
+}
+.btn-demo.haoka { background:var(--c-haoka); color:#fff; }
+.btn-demo.token { background:var(--c-token); color:#fff; }
+.btn-demo.knowledge { background:var(--c-knowledge); color:#fff; }
+.btn-demo.overseas { background:var(--c-overseas); color:#fff; }
+.btn-demo:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-demo.outline {
+  background:transparent; border:1.5px solid;
+}
+.btn-demo.outline.haoka { color:var(--c-haoka); border-color:var(--c-haoka); }
+.btn-demo.outline.token { color:var(--c-token); border-color:var(--c-token); }
+.btn-demo.outline.knowledge { color:var(--c-knowledge); border-color:var(--c-knowledge); }
+.btn-demo.outline.overseas { color:var(--c-overseas); border-color:var(--c-overseas); }
+.btn-demo.outline:hover { background:transparent; filter:none; }
+
+/* ===== Stats ===== */
+.stats { background:var(--brand); padding:48px 0; }
+.stats-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center;
+}
+.stat-item .stat-num { font-size:36px; font-weight:900; color:#fff; line-height:1.2; }
+.stat-item .stat-label { font-size:13px; color:rgba(255,255,255,.7); margin-top:4px; }
+@media (max-width:768px) {
+  .stats-grid { grid-template-columns:repeat(2,1fr); gap:24px; }
+  .stat-item .stat-num { font-size:28px; }
+}
+
+/* ===== Packages ===== */
+.packages-grid { display:grid; gap:24px; grid-template-columns:repeat(3,1fr); }
+@media (max-width:768px) { .packages-grid { grid-template-columns:1fr; max-width:380px; margin:0 auto; } }
+
+.package-card {
+  background:var(--card); border-radius:var(--radius);
+  border:2px solid var(--border); padding:32px 24px; text-align:center;
+  transition:all .3s; position:relative;
+}
+.package-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); }
+.package-card.featured {
+  border-color:var(--brand); box-shadow:0 0 0 8px rgba(79,70,229,.06);
+  background:linear-gradient(180deg, #FAFAFE 0%, #fff 100%);
+}
+.package-badge {
+  position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+  background:var(--brand); color:#fff; font-size:12px; font-weight:700;
+  padding:5px 22px; border-radius:12px; white-space:nowrap;
+}
+.package-name { font-size:18px; font-weight:800; margin-bottom:16px; }
+.package-price { font-size:40px; font-weight:900; color:var(--brand); margin-bottom:20px; line-height:1; }
+.package-price span { font-size:16px; font-weight:500; }
+.package-features { list-style:none; text-align:left; margin-bottom:24px; }
+.package-features li {
+  font-size:14px; color:var(--t2); padding:8px 0; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:8px;
+}
+.package-features li:last-child { border-bottom:none; }
+.package-features li::before { content:''; width:18px; height:18px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310B981'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E") center/contain no-repeat; flex-shrink:0; }
+
+.btn-pkg {
+  display:block; width:100%; text-align:center; font-size:14px; font-weight:700;
+  padding:12px 0; border-radius:8px; transition:all .2s; cursor:pointer;
+  background:var(--brand); color:#fff; border:none;
+}
+.btn-pkg:hover { background:var(--brand-dark); transform:translateY(-1px); }
+.btn-pkg.outline { background:transparent; color:var(--brand); border:2px solid #C7D2FE; }
+.btn-pkg.outline:hover { background:var(--brand-light); }
+
+/* ===== CTA ===== */
+.cta-section {
+  background:linear-gradient(150deg, #312E81 0%, #4F46E5 50%, #6366F1 100%);
+  color:#fff; text-align:center; padding:72px 0;
+  position:relative; overflow:hidden;
+}
+.cta-section::before {
+  content:''; position:absolute; top:-80px; right:-40px;
+  width:300px; height:300px; background:rgba(255,255,255,.04); border-radius:50%;
+}
+.cta-section h2 { font-size:32px; font-weight:900; position:relative; z-index:1; margin-bottom:12px; }
+.cta-section p { font-size:16px; opacity:.85; position:relative; z-index:1; margin-bottom:32px; }
+.cta-box {
+  display:inline-flex; align-items:center; gap:20px;
+  background:rgba(255,255,255,.12); backdrop-filter:blur(8px);
+  border-radius:var(--radius); padding:20px 28px;
+  position:relative; z-index:1;
+}
+.cta-box img { width:100px; border-radius:10px; background:#fff; padding:6px; }
+.cta-info { text-align:left; font-size:13px; opacity:.9; line-height:1.7; }
+.cta-info strong { font-size:16px; display:block; margin-bottom:4px; }
+@media (max-width:768px) {
+  .cta-section { padding:56px 0; }
+  .cta-section h2 { font-size:24px; }
+  .cta-box { flex-direction:column; text-align:center; }
+}
+
+/* ===== Footer ===== */
+.footer {
+  background:#0F172A; color:#94A3B8; padding:48px 0 24px;
+}
+.footer-grid { display:grid; gap:32px; grid-template-columns:2fr 1fr 1fr; margin-bottom:32px; }
+.footer-brand h3 { font-size:18px; font-weight:800; color:#fff; margin-bottom:8px; }
+.footer-brand p { font-size:13px; line-height:1.7; }
+.footer-col h4 { font-size:13px; font-weight:700; color:#fff; margin-bottom:12px; text-transform:uppercase; letter-spacing:.5px; }
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.footer-col li { font-size:13px; cursor:pointer; transition:color .2s; }
+.footer-col li:hover { color:#fff; }
+.footer-bottom {
+  border-top:1px solid #1E293B; padding-top:20px;
+  display:flex; justify-content:space-between; align-items:center; font-size:12px;
+}
+.footer-brand-link { color:var(--brand); font-weight:600; }
+@media (max-width:768px) {
+  .footer-grid { grid-template-columns:1fr; }
+  .footer-bottom { flex-direction:column; gap:8px; text-align:center; }
+}
+
+/* ===== Mobile Nav Burger ===== */
+.nav-burger { display:none; background:none; border:none; cursor:pointer; padding:4px; }
+.nav-burger svg { width:24px; height:24px; stroke:var(--text); fill:none; stroke-width:2; }
+@media (max-width:768px) { .nav-burger { display:flex; } }
+</style>
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar">
+  <div class="container">
+    <a href="#" class="nav-brand">
+      <div class="nav-brand-icon">蓝</div>
+      蓝图科技
+    </a>
+    <ul class="nav-links">
+      <li><a href="#products">产品线</a></li>
+      <li><a href="#packages">套餐方案</a></li>
+      <li><a href="#contact">联系我们</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">立即咨询</a>
+    <button class="nav-burger" aria-label="菜单">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge"><span class="dot"></span>虚拟产品出海全链路服务商</div>
+    <h1>花 <em>2~5k</em>，<br>买一套虚拟产品赚钱系统</h1>
+    <p class="hero-sub">不用囤货 · 不用露脸 · 在家就能做<br>我们已经跑通了四条产品线，<strong>你照着做就行</strong></p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">查看演示站 →</a>
+      <a href="#packages" class="btn-outline">了解套餐方案</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Products ===== -->
+<section class="section" id="products">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">四大产品线</div>
+      <h2 class="section-title">每一条我们都亲自跑通过</h2>
+      <p class="section-sub">踩过坑、跑出了结果。点击下方「查看演示站」体验每条产品线的最终交付效果</p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- 号卡独立站 -->
+      <div class="product-card">
+        <div class="product-cover haoka">
+          <div class="product-icon haoka">📱</div>
+          <h3>号卡<br>独立站</h3>
+          <span class="pc-badge haoka">高佣金</span>
+        </div>
+        <div class="product-body">
+          <p>搭建自动化号卡下单平台，对接运营商货源渠道，设置推广分佣体系。卖手机卡、流量卡赚取佣金，实现被动收入。</p>
+          <div class="product-features">
+            <span class="product-feature haoka">零库存</span>
+            <span class="product-feature haoka">自动化运转</span>
+            <span class="product-feature haoka">高额分佣</span>
+          </div>
+          <div class="product-actions">
+            <a href="demo-sites/haoka/index.html" class="btn-demo haoka">查看演示站</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Token 独立站 -->
+      <div class="product-card">
+        <div class="product-cover token">
+          <div class="product-icon token">🤖</div>
+          <h3>AI Token<br>服务平台</h3>
+          <span class="pc-badge token">刚需</span>
+        </div>
+        <div class="product-body">
+          <p>搭建多模型AI聚合平台（ChatGPT / Claude / Midjourney等），用户充值使用，你赚取差价。一套系统对接全球AI能力。</p>
+          <div class="product-features">
+            <span class="product-feature token">多模型聚合</span>
+            <span class="product-feature token">自动充值</span>
+            <span class="product-feature token">高频刚需</span>
+          </div>
+          <div class="product-actions">
+            <a href="demo-sites/token/index.html" class="btn-demo token">查看演示站</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 知识付费独立站 -->
+      <div class="product-card">
+        <div class="product-cover knowledge">
+          <div class="product-icon knowledge">📚</div>
+          <h3>知识付费<br>独立站</h3>
+          <span class="pc-badge knowledge">躺赚</span>
+        </div>
+        <div class="product-body">
+          <p>搭建课程/资料/会员自动交付平台，对接支付。客户付款即到账，课程自动发送，一个人也能运营完整知识付费业务。</p>
+          <div class="product-features">
+            <span class="product-feature knowledge">一次搭建</span>
+            <span class="product-feature knowledge">自动交付</span>
+            <span class="product-feature knowledge">持续收入</span>
+          </div>
+          <div class="product-actions">
+            <a href="demo-sites/zhishifufei/index.html" class="btn-demo knowledge">查看演示站</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 海外社媒AI涨粉 -->
+      <div class="product-card">
+        <div class="product-cover overseas">
+          <div class="product-icon overseas">🎬</div>
+          <h3>海外社媒<br>AI 运营</h3>
+          <span class="pc-badge overseas">不露脸</span>
+        </div>
+        <div class="product-body">
+          <p>用AI工具批量制作短视频，发布到TikTok/Ins/YouTube，不露脸涨粉，引流私域变现。赚美金，天花板更高。</p>
+          <div class="product-features">
+            <span class="product-feature overseas">不露脸</span>
+            <span class="product-feature overseas">AI批量生产</span>
+            <span class="product-feature overseas">赚美金</span>
+          </div>
+          <div class="product-actions">
+            <a href="demo-sites/overseas/index.html" class="btn-demo overseas">查看演示站</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== Stats ===== -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">已跑通产品线</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">全链路</div>
+        <div class="stat-label">从引流到变现闭环</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3~7天</div>
+        <div class="stat-label">独立站交付上线</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0 库存</div>
+        <div class="stat-label">纯虚拟产品模式</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Packages ===== -->
+<section class="section" id="packages">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">套餐方案</div>
+      <h2 class="section-title">选一个适合你的起点</h2>
+      <p class="section-sub">一次付费，全套交付，后续不另收费</p>
+    </div>
+
+    <div class="packages-grid">
+      <div class="package-card">
+        <div class="package-name">入门版</div>
+        <div class="package-price">2980<span> 元</span></div>
+        <ul class="package-features">
+          <li>任选 1 条产品线</li>
+          <li>独立站搭建 + 上线</li>
+          <li>远程一对一培训</li>
+          <li>3 个月答疑指导</li>
+        </ul>
+        <a href="#contact" class="btn-pkg outline">了解详情</a>
+      </div>
+
+      <div class="package-card featured">
+        <div class="package-badge">🔥 最推荐</div>
+        <div class="package-name">标准版</div>
+        <div class="package-price">3980<span> 元</span></div>
+        <ul class="package-features">
+          <li>任选 2 条产品线</li>
+          <li>全链路运营打法指导</li>
+          <li>独立站搭建 + 上线</li>
+          <li>6 个月答疑指导</li>
+        </ul>
+        <a href="#contact" class="btn-pkg">立即咨询</a>
+      </div>
+
+      <div class="package-card">
+        <div class="package-name">旗舰版</div>
+        <div class="package-price">5980<span> 元</span></div>
+        <ul class="package-features">
+          <li>4 条产品线全选</li>
+          <li>一对一深度陪跑</li>
+          <li>独立站搭建 + 上线</li>
+          <li>12 个月答疑指导</li>
+        </ul>
+        <a href="#contact" class="btn-pkg outline">了解详情</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <h2>准备好开始了吗？</h2>
+    <p>加微信聊聊你的想法，看看哪条产品线最适合你</p>
+    <div class="cta-box">
+      <img src="qrcode-mujia.png" alt="扫码加微信">
+      <div class="cta-info">
+        <strong>木嘉 · 蓝图科技</strong>
+        微信：zuimeimdd<br>
+        扫码加好友，备注「蓝图」
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>蓝图科技</h3>
+        <p>虚拟产品出海全链路服务商。我们帮你从0到1搭建虚拟产品赚钱系统——号卡、AI、知识付费、海外社媒，四条产品线全部自己跑通过。花2~5k，给你一整套能收钱的系统。</p>
+      </div>
+      <div class="footer-col">
+        <h4>产品线</h4>
+        <ul>
+          <li>号卡独立站</li>
+          <li>AI Token 平台</li>
+          <li>知识付费独立站</li>
+          <li>海外社媒AI运营</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>联系</h4>
+        <ul>
+          <li>微信：zuimeimdd</li>
+          <li>公司：山西蓝图网络科技</li>
+          <li>地址：山西 · 忻州</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 蓝图科技 · 山西蓝图网络科技有限公司</div>
+      <div><span class="footer-brand-link">木嘉AI</span> 出品</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
