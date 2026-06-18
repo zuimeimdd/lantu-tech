@@ -29,7 +29,7 @@
 
     /* ===== Header / Nav ===== */
     .header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 36px; left: 0; right: 0; z-index: 100;
       background: rgba(255,255,255,0.97);
       border-bottom: 1px solid #E2E8F0;
       backdrop-filter: blur(8px);
@@ -62,7 +62,7 @@
 
     /* ===== Hero ===== */
     .hero {
-      padding: 100px 0 60px;
+      padding: 136px 0 60px;
       background: linear-gradient(165deg, #EFF6FF 0%, #DBEAFE 40%, #F0F9FF 100%);
       text-align: center;
     }
@@ -269,9 +269,38 @@
       .hero h1 { font-size: 36px; }
       .section { padding: 72px 0; }
     }
+    /* ===== Global Site Nav ===== */
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 36px; background: #1E293B;
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; padding: 0 10px;
+      font-size: 12px;
+    }
+    .site-nav a {
+      color: #94A3B8; text-decoration: none;
+      font-weight: 500; transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .site-nav a:hover { color: #fff; }
+    .site-nav a.active { color: #60A5FA; font-weight: 700; }
+    .site-nav-back { color: #F59E0B !important; font-weight: 700 !important; }
+    .site-nav-divider { color: #334155; font-size: 10px; }
+    @media (min-width: 640px) {
+      .site-nav { gap: 20px; font-size: 13px; padding: 0 16px; }
+    }
   </style>
 </head>
 <body>
+<!-- ===== Global Site Nav ===== -->
+<nav class="site-nav">
+  <a href="../../index.html" class="site-nav-back">← 返回首页</a>
+  <span class="site-nav-divider">|</span>
+  <a href="../haoka/index.html" class="active">号卡</a>
+  <a href="../token/index.html">AI Token</a>
+  <a href="../zhishifufei/index.html">知识付费</a>
+  <a href="../overseas/index.html">海外涨粉</a>
+</nav>
 
   <!-- ===== Header ===== -->
   <header class="header">

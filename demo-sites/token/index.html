@@ -51,7 +51,7 @@
         /* ========== 导航栏 ========== */
         .navbar {
             position: fixed;
-            top: 0;
+            top: 36px;
             left: 0;
             right: 0;
             z-index: 1000;
@@ -137,7 +137,7 @@
 
         /* ========== Hero区域 ========== */
         .hero {
-            padding-top: 120px;
+            padding-top: 156px;
             padding-bottom: 80px;
             text-align: center;
             background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15), transparent 60%),
@@ -738,9 +738,39 @@
                 max-width: 280px;
             }
         }
+        /* ===== Global Site Nav ===== */
+        .site-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+            height: 36px; background: #1E293B;
+            display: flex; align-items: center; justify-content: center;
+            gap: 16px; padding: 0 10px;
+            font-size: 12px;
+        }
+        .site-nav a {
+            color: #94A3B8; text-decoration: none;
+            font-weight: 500; transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .site-nav a:hover { color: #fff; }
+        .site-nav a.active { color: #60A5FA; font-weight: 700; }
+        .site-nav-back { color: #F59E0B !important; font-weight: 700 !important; }
+        .site-nav-divider { color: #334155; font-size: 10px; }
+        @media (min-width: 640px) {
+            .site-nav { gap: 20px; font-size: 13px; padding: 0 16px; }
+        }
     </style>
 </head>
 <body>
+<!-- ===== Global Site Nav ===== -->
+<nav class="site-nav">
+  <a href="../../index.html" class="site-nav-back">← 返回首页</a>
+  <span class="site-nav-divider">|</span>
+  <a href="../haoka/index.html">号卡</a>
+  <a href="../token/index.html" class="active">AI Token</a>
+  <a href="../zhishifufei/index.html">知识付费</a>
+  <a href="../overseas/index.html">海外涨粉</a>
+</nav>
+
     <!-- 顶部导航栏 -->
     <nav class="navbar">
         <div class="container">
